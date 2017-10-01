@@ -27,28 +27,23 @@ public:
 	UPROPERTY(Transient)
 	class ATicTacToeBlockGrid* OwningGrid;
 
-	/** Handle the block being clicked */
-	UFUNCTION()
-	void BlockClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
-
-	/** Handle the block being touched  */
-	UFUNCTION()
-	void OnFingerPressedBlock(ETouchIndex::Type FingerIndex, UPrimitiveComponent* TouchedComponent);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void HandleClicked();
-
 	UFUNCTION(BlueprintImplementableEvent)
 	void Highlight(bool bOn);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSetBlockOwner();
+
 public:
+	UFUNCTION()
 	FORCEINLINE ETicTacToeBlockOwner GetBlockOwner() const
 	{
 		return BlockOwner;
 	}
 
+	UFUNCTION(BlueprintSetter)
 	void SetBlockOwner(const ETicTacToeBlockOwner BlockOwner);
 
 protected:
+	UPROPERTY(BlueprintSetter=SetBlockOwner)
 	ETicTacToeBlockOwner BlockOwner;
 };

@@ -20,31 +20,11 @@ void ATicTacToePawn::Tick(float DeltaSeconds)
 
 	if (APlayerController* PC = Cast<APlayerController>(GetController()))
 	{
-		if (UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayEnabled())
-		{
-			if (UCameraComponent* OurCamera = PC->GetViewTarget()->FindComponentByClass<UCameraComponent>())
-			{
-				FVector Start = OurCamera->GetComponentLocation();
-				FVector End = Start + (OurCamera->GetComponentRotation().Vector() * 8000.0f);
-				TraceForBlock(Start, End, true);
-			}
-		}
-		else
-		{
-			FVector Start, Dir, End;
-			PC->DeprojectMousePositionToWorld(Start, Dir);
-			End = Start + (Dir * 8000.0f);
-			TraceForBlock(Start, End, false);
-		}
+		FVector Start, Dir, End;
+		PC->DeprojectMousePositionToWorld(Start, Dir);
+		End = Start + (Dir * 8000.0f);
+		TraceForBlock(Start, End, false);
 	}
-}
-
-void ATicTacToePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	PlayerInputComponent->BindAction("OnResetVR", EInputEvent::IE_Pressed, this, &ATicTacToePawn::OnResetVR);
-	PlayerInputComponent->BindAction("TriggerClick", EInputEvent::IE_Pressed, this, &ATicTacToePawn::TriggerClick);
 }
 
 void ATicTacToePawn::CalcCamera(float DeltaTime, struct FMinimalViewInfo& OutResult)
@@ -52,19 +32,6 @@ void ATicTacToePawn::CalcCamera(float DeltaTime, struct FMinimalViewInfo& OutRes
 	Super::CalcCamera(DeltaTime, OutResult);
 
 	OutResult.Rotation = FRotator(-90.0f, -90.0f, 0.0f);
-}
-
-void ATicTacToePawn::OnResetVR()
-{
-	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
-}
-
-void ATicTacToePawn::TriggerClick()
-{
-	if (CurrentBlockFocus)
-	{
-		CurrentBlockFocus->HandleClicked();
-	}
 }
 
 void ATicTacToePawn::TraceForBlock(const FVector& Start, const FVector& End, bool bDrawDebugHelpers)

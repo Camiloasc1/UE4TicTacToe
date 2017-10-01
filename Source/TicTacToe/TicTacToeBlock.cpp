@@ -12,17 +12,6 @@ ATicTacToeBlock::ATicTacToeBlock()
 {
 }
 
-void ATicTacToeBlock::BlockClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
-{
-	HandleClicked();
-}
-
-
-void ATicTacToeBlock::OnFingerPressedBlock(ETouchIndex::Type FingerIndex, UPrimitiveComponent* TouchedComponent)
-{
-	HandleClicked();
-}
-
 void ATicTacToeBlock::SetBlockOwner(const ETicTacToeBlockOwner BlockOwner)
 {
 	ATicTacToeGameState* GameState = Cast<ATicTacToeGameState>(GetWorld()->GetGameState());
@@ -32,6 +21,7 @@ void ATicTacToeBlock::SetBlockOwner(const ETicTacToeBlockOwner BlockOwner)
 			GameState->GetCurrentTurn() == ETicTacToeTurn::PLAYER_X && BlockOwner == ETicTacToeBlockOwner::PLAYER_X)
 		{
 			this->BlockOwner = BlockOwner;
+			OnSetBlockOwner();
 		}
 	}
 }
