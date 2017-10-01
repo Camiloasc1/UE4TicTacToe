@@ -3,5 +3,7 @@
 #include "TicTacToeGameState.h"
 
 
-
-
+ATicTacToeGameState::ATicTacToeGameState()
+{
+	CurrentTurn = FMath::RandBool() ? ETicTacToeTurn::PLAYER_O : ETicTacToeTurn::PLAYER_X;
+}

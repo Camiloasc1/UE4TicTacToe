@@ -19,6 +19,9 @@ class TICTACTOE_API ATicTacToeGameState : public AGameStateBase
 	GENERATED_BODY()
 
 public:
+	ATicTacToeGameState();
+
+public:
 	UFUNCTION(Blueprintcallable)
 	ETicTacToeTurn GetCurrentTurn() const
 	{
