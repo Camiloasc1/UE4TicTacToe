@@ -3,11 +3,12 @@
 #include "TicTacToeGameMode.h"
 #include "TicTacToePlayerController.h"
 #include "TicTacToePawn.h"
+#include "TicTacToeGameState.h"
 
 ATicTacToeGameMode::ATicTacToeGameMode()
 {
-	// no pawn by default
+	// Defaults
 	DefaultPawnClass = ATicTacToePawn::StaticClass();
-	// use our own player controller class
 	PlayerControllerClass = ATicTacToePlayerController::StaticClass();
+	GameStateClass = ATicTacToeGameState::StaticClass();
 }
