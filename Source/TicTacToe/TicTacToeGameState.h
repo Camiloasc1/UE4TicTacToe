@@ -18,16 +18,26 @@ class TICTACTOE_API ATicTacToeGameState : public AGameStateBase
 {
 	GENERATED_BODY()
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTurnSwap);
+
 public:
 	ATicTacToeGameState();
 
 public:
-	UFUNCTION(Blueprintcallable)
+	UFUNCTION()
 	ETicTacToeTurn GetCurrentTurn() const
 	{
 		return CurrentTurn;
 	}
 
-private:
+	UFUNCTION(BlueprintCallable)
+	void SwapTurn();
+
+public:
+	UPROPERTY(BlueprintAssignable)
+	FOnTurnSwap OnTurnSwap;
+
+protected:
+	UPROPERTY(BlueprintReadOnly)
 	ETicTacToeTurn CurrentTurn;
 };

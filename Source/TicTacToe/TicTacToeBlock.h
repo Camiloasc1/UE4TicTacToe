@@ -44,6 +44,6 @@ public:
 	void SetBlockOwner(const ETicTacToeBlockOwner BlockOwner);
 
 protected:
-	UPROPERTY(BlueprintSetter=SetBlockOwner)
+	UPROPERTY(BlueprintSetter = SetBlockOwner)
 	ETicTacToeBlockOwner BlockOwner;
 };

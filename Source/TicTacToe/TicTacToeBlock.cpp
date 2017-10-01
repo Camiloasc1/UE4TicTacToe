@@ -22,6 +22,7 @@ void ATicTacToeBlock::SetBlockOwner(const ETicTacToeBlockOwner BlockOwner)
 		{
 			this->BlockOwner = BlockOwner;
 			OnSetBlockOwner();
+			GameState->SwapTurn();
 		}
 	}
 }
