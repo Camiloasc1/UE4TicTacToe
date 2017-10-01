@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "TicTacToeBlockGrid.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ETicTacToeState : uint8
 {
 	NOT_FINISHED,

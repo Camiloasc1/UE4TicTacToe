@@ -6,7 +6,7 @@
 #include "GameFramework/GameStateBase.h"
 #include "TicTacToeGameState.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class ETicTacToeTurn : uint8
 {
 	PLAYER_O,
@@ -19,6 +19,7 @@ class TICTACTOE_API ATicTacToeGameState : public AGameStateBase
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Blueprintcallable)
 	ETicTacToeTurn GetCurrentTurn() const
 	{
 		return CurrentTurn;
