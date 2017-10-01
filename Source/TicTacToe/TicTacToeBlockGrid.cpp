@@ -33,9 +33,17 @@ void ATicTacToeBlockGrid::BeginPlay()
 		const FVector BlockLocation = FVector(XOffset + BoardOffset, YOffset + BoardOffset, 0.f) + GetActorLocation();
 
 		// Spawn a block
-		ATicTacToeBlock* NewBlock = GetWorld()->SpawnActor<ATicTacToeBlock>(BlockLocation, FRotator(0, 0, 0));
-		
-		if (NewBlock != nullptr)
+		ATicTacToeBlock* NewBlock;
+		if (IsValid(BlockTemplate))
+		{
+			NewBlock = GetWorld()->SpawnActor<ATicTacToeBlock>(BlockTemplate, BlockLocation, FRotator(0, 0, 0));
+		}
+		else
+		{
+			NewBlock = GetWorld()->SpawnActor<ATicTacToeBlock>(BlockLocation, FRotator(0, 0, 0));
+		}
+
+		if (IsValid(NewBlock))
 		{
 			// Tell the block about its owner
 			NewBlock->OwningGrid = this;

@@ -24,16 +24,17 @@ class ATicTacToeBlockGrid : public AActor
 public:
 	ATicTacToeBlockGrid();
 
+	/** Template of the block */
+	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<ATicTacToeBlock> BlockTemplate;
+
 	/** Number of blocks along each side of grid */
-	UPROPERTY(Category=Grid, EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
 	int32 Size;
 
 	/** Spacing of blocks */
 	UPROPERTY(Category=Grid, EditAnywhere, BlueprintReadOnly)
 	float BlockSpacing;
-
-	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
-	TArray<class ATicTacToeBlock*> Board;
 
 public:
 	void BeginPlay() override;
@@ -44,4 +45,9 @@ public:
 
 	UFUNCTION()
 	ETicTacToeState GetWinner();
+
+protected:
+	UPROPERTY(Transient)
+	TArray<ATicTacToeBlock*> Board;
+
 };
