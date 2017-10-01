@@ -14,7 +14,7 @@ ATicTacToeBlock::ATicTacToeBlock()
 
 void ATicTacToeBlock::SetBlockOwner(const ETicTacToeBlockOwner BlockOwner)
 {
-	ATicTacToeGameState* GameState = Cast<ATicTacToeGameState>(GetWorld()->GetGameState());
+	ATicTacToeGameState* GameState = GetWorld()->GetGameState<ATicTacToeGameState>();
 	if (IsValid(GameState))
 	{
 		if (GameState->GetCurrentTurn() == ETicTacToeTurn::PLAYER_O && BlockOwner == ETicTacToeBlockOwner::PLAYER_O ||
