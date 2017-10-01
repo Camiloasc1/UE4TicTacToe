@@ -6,25 +6,23 @@
 #include "GameFramework/Actor.h"
 #include "TicTacToeBlockGrid.generated.h"
 
+UENUM()
+enum class ETicTacToeState : uint8
+{
+	NOT_FINISHED,
+	TIE,
+	PLAYER_O,
+	PLAYER_X
+};
+
 /** Class used to spawn blocks and manage score */
-UCLASS(minimalapi)
+UCLASS()
 class ATicTacToeBlockGrid : public AActor
 {
 	GENERATED_BODY()
 
-	/** Dummy root component */
-	UPROPERTY(Category = Grid, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class USceneComponent* DummyRoot;
-
-	/** Text component for the score */
-	UPROPERTY(Category = Grid, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UTextRenderComponent* ScoreText;
-
 public:
 	ATicTacToeBlockGrid();
-
-	/** How many blocks have been clicked */
-	int32 Score;
 
 	/** Number of blocks along each side of grid */
 	UPROPERTY(Category=Grid, EditAnywhere, BlueprintReadOnly)
@@ -34,21 +32,16 @@ public:
 	UPROPERTY(Category=Grid, EditAnywhere, BlueprintReadOnly)
 	float BlockSpacing;
 
-protected:
-	// Begin AActor interface
-	virtual void BeginPlay() override;
-	// End AActor interface
+	UPROPERTY(Category = Grid, EditAnywhere, BlueprintReadOnly)
+	TArray<class ATicTacToeBlock*> Board;
 
 public:
+	void BeginPlay() override;
 
-	/** Handle the block being clicked */
-	void AddScore();
+public:
+	UFUNCTION()
+	ATicTacToeBlock* GetBlockAt(int32 I, int32 J);
 
-	/** Returns DummyRoot subobject **/
-	FORCEINLINE class USceneComponent* GetDummyRoot() const { return DummyRoot; }
-	/** Returns ScoreText subobject **/
-	FORCEINLINE class UTextRenderComponent* GetScoreText() const { return ScoreText; }
+	UFUNCTION()
+	ETicTacToeState GetWinner();
 };
-
-
-
