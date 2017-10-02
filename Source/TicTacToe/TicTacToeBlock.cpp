@@ -10,6 +10,7 @@
 
 ATicTacToeBlock::ATicTacToeBlock()
 {
+	this->BlockOwner = ETicTacToeBlockOwner::EMPTY;
 }
 
 void ATicTacToeBlock::SetBlockOwner(const ETicTacToeBlockOwner BlockOwner)
@@ -22,7 +23,18 @@ void ATicTacToeBlock::SetBlockOwner(const ETicTacToeBlockOwner BlockOwner)
 		{
 			this->BlockOwner = BlockOwner;
 			OnSetBlockOwner();
-			GameState->SwapTurn();
+			if(IsValid(OwningGrid))
+			{
+				ETicTacToeState State = OwningGrid->GetWinner();
+				if (State == ETicTacToeState::NOT_FINISHED)
+				{
+					GameState->SwapTurn();
+				}
+				else
+				{
+					GameState->EndGame(State);
+				}
+			}
 		}
 	}
 }
