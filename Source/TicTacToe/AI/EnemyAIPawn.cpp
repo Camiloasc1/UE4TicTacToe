@@ -31,7 +31,7 @@ void AEnemyAIPawn::BeginPlay()
 	{
 		GameState->OnTurnSwap.AddDynamic(this, &AEnemyAIPawn::OnTurnSwap);
 		FTimerHandle SetupDelayTimer;
-		GetWorld()->GetTimerManager().SetTimer(SetupDelayTimer, this, &AEnemyAIPawn::OnTurnSwap, 1.0f, false);
+		GetWorld()->GetTimerManager().SetTimer(SetupDelayTimer, this, &AEnemyAIPawn::OnTurnSwap, 0.1f, false);
 	}
 }
 
