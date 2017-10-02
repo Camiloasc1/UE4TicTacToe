@@ -41,7 +41,13 @@ public:
 
 public:
 	UFUNCTION()
-	ATicTacToeBlock* GetBlockAt(int32 I, int32 J);
+	ATicTacToeBlock* GetBlockAt(int32 i, int32 j);
+
+	UFUNCTION()
+	ATicTacToeBlock* GetArrayBlockAt(int32 i)
+	{
+		return Board[i];
+	}
 
 	UFUNCTION()
 	ETicTacToeState GetWinner();

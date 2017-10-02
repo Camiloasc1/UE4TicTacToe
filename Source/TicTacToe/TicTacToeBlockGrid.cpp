@@ -53,9 +53,9 @@ void ATicTacToeBlockGrid::BeginPlay()
 	}
 }
 
-ATicTacToeBlock* ATicTacToeBlockGrid::GetBlockAt(int32 I, int32 J)
+ATicTacToeBlock* ATicTacToeBlockGrid::GetBlockAt(int32 i, int32 j)
 {
-	return Board[I * Size + J];
+	return Board[i * Size + j];
 }
 
 ETicTacToeState ATicTacToeBlockGrid::GetWinner()
