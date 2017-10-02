@@ -13,3 +13,8 @@ void ATicTacToeGameState::SwapTurn()
 	CurrentTurn = (CurrentTurn == ETicTacToeTurn::PLAYER_O) ? ETicTacToeTurn::PLAYER_X : ETicTacToeTurn::PLAYER_O;
 	OnTurnSwap.Broadcast();
 }
+
+void ATicTacToeGameState::EndGame(ETicTacToeState FinalState)
+{
+	OnGameEnd.Broadcast(FinalState);
+}

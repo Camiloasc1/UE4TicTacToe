@@ -19,6 +19,7 @@ class TICTACTOE_API ATicTacToeGameState : public AGameStateBase
 	GENERATED_BODY()
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTurnSwap);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGameEnd, ETicTacToeState, FinalState);
 
 public:
 	ATicTacToeGameState();
@@ -33,9 +34,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SwapTurn();
 
+	UFUNCTION(BlueprintCallable)
+	void EndGame(ETicTacToeState FinalState);
+
 public:
 	UPROPERTY(BlueprintAssignable)
 	FOnTurnSwap OnTurnSwap;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnGameEnd OnGameEnd;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
