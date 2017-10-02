@@ -139,7 +139,7 @@ ETicTacToeState ATicTacToeBlockGrid::GetWinner()
 	{
 		for (int32 j = 0; j < Size; j++)
 		{
-			if (GetBlockAt(i, i)->GetBlockOwner() == ETicTacToeBlockOwner::EMPTY)
+			if (GetBlockAt(i, j)->GetBlockOwner() == ETicTacToeBlockOwner::EMPTY)
 			{
 				Empty++;
 			}

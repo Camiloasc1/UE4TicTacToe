@@ -51,16 +51,17 @@ void AEnemyAIPawn::OnTurnSwap()
 			for (int32 i = 0; i < SizeSquared; ++i)
 			{
 				Board.Add(GameBoard->GetArrayBlockAt(i)->GetBlockOwner());
+				UE_LOG(LogTemp, Warning, TEXT("%u"), (uint8)GameBoard->GetArrayBlockAt(i)->GetBlockOwner())
 			}
 
-			FMove BestMove = Play(Board, ETicTacToeBlockOwner::PLAYER_X);
+			FMove BestMove = GetBestMove(Board, ETicTacToeBlockOwner::PLAYER_X);
 			UE_LOG(LogTemp,Warning,TEXT("%i : %i"), BestMove.X, BestMove.Y)
 			GameBoard->GetBlockAt(BestMove.X, BestMove.Y)->SetBlockOwner(ETicTacToeBlockOwner::PLAYER_X);
 		}
 	}
 }
 
-FMove AEnemyAIPawn::Play(TArray<ETicTacToeBlockOwner>& Board, ETicTacToeBlockOwner Player)
+FMove AEnemyAIPawn::GetBestMove(TArray<ETicTacToeBlockOwner>& Board, ETicTacToeBlockOwner Player)
 {
 	FMove WinMove;
 	FMove TieMove;
@@ -79,7 +80,7 @@ FMove AEnemyAIPawn::Play(TArray<ETicTacToeBlockOwner>& Board, ETicTacToeBlockOwn
 			if (GetBlockAt(Board, i, j) == ETicTacToeBlockOwner::EMPTY)
 			{
 				SetBlockAt(Board, i, j, Player);
-				FMove Move = Play(Board, (Player == ETicTacToeBlockOwner::PLAYER_O) ? ETicTacToeBlockOwner::PLAYER_X : ETicTacToeBlockOwner::PLAYER_O);
+				FMove Move = GetBestMove(Board, (Player == ETicTacToeBlockOwner::PLAYER_O) ? ETicTacToeBlockOwner::PLAYER_X : ETicTacToeBlockOwner::PLAYER_O);
 				SetBlockAt(Board, i, j, ETicTacToeBlockOwner::EMPTY);
 
 				if (Move.Winner == ETicTacToeState::PLAYER_X && Player == ETicTacToeBlockOwner::PLAYER_X ||
@@ -88,38 +89,35 @@ FMove AEnemyAIPawn::Play(TArray<ETicTacToeBlockOwner>& Board, ETicTacToeBlockOwn
 					WinMove = Move;
 					WinMove.X = i;
 					WinMove.Y = j;
-					WinMove.Deep = Move.Deep + 1;
+					WinMove.Deep++;
 				}
 				else if (Move.Winner == ETicTacToeState::TIE)
 				{
 					TieMove = Move;
 					TieMove.X = i;
 					TieMove.Y = j;
-					TieMove.Deep = Move.Deep + 1;
+					TieMove.Deep++;
 				}
 				else
 				{
 					LoseMove = Move;
 					LoseMove.X = i;
 					LoseMove.Y = j;
-					LoseMove.Deep = Move.Deep + 1;
+					LoseMove.Deep++;
 				}
 			}
 		}
 	}
 
-	if (WinMove.X > 0 && WinMove.Y > 0)
+	if (WinMove.IsValid())
 	{
 		return WinMove;
 	}
-	else if (TieMove.X > 0 && TieMove.Y > 0)
+	if (TieMove.IsValid())
 	{
 		return TieMove;
 	}
-	else
-	{
-		return LoseMove;
-	}
+	return LoseMove;
 }
 
 ETicTacToeState AEnemyAIPawn::GetWinner(TArray<ETicTacToeBlockOwner>& Board)
@@ -203,7 +201,7 @@ ETicTacToeState AEnemyAIPawn::GetWinner(TArray<ETicTacToeBlockOwner>& Board)
 	{
 		for (int32 j = 0; j < Size; j++)
 		{
-			if (GetBlockAt(Board, i, i) == ETicTacToeBlockOwner::EMPTY)
+			if (GetBlockAt(Board, i, j) == ETicTacToeBlockOwner::EMPTY)
 			{
 				Empty++;
 			}

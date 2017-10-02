@@ -24,8 +24,8 @@ struct FMove
 
 	FMove()
 		: Winner(ETicTacToeState::NOT_FINISHED),
-		X(0),
-		Y(0),
+		X(-1),
+		Y(-1),
 		Deep(0)
 	{
 	}
@@ -36,6 +36,11 @@ struct FMove
 		  Y(Y),
 		  Deep(Deep)
 	{
+	}
+
+	bool IsValid() const
+	{
+		return X > -1 && Y > -1;
 	}
 };
 
@@ -55,7 +60,7 @@ protected:
 	void OnTurnSwap();
 
 public:
-	FMove Play(TArray<ETicTacToeBlockOwner>& Board, ETicTacToeBlockOwner player);
+	FMove GetBestMove(TArray<ETicTacToeBlockOwner>& Board, ETicTacToeBlockOwner player);
 
 	ETicTacToeState GetWinner(TArray<ETicTacToeBlockOwner>& Board);
 
