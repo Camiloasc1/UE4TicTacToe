@@ -51,11 +51,11 @@ void AEnemyAIPawn::OnTurnSwap()
 			for (int32 i = 0; i < SizeSquared; ++i)
 			{
 				Board.Add(GameBoard->GetArrayBlockAt(i)->GetBlockOwner());
-				UE_LOG(LogTemp, Warning, TEXT("%u"), (uint8)GameBoard->GetArrayBlockAt(i)->GetBlockOwner())
+				//UE_LOG(LogTemp, Warning, TEXT("%u"), (uint8)GameBoard->GetArrayBlockAt(i)->GetBlockOwner())
 			}
 
 			FMove BestMove = GetBestMove(Board, ETicTacToeBlockOwner::PLAYER_X);
-			UE_LOG(LogTemp,Warning,TEXT("%i : %i"), BestMove.X, BestMove.Y)
+			UE_LOG(LogTemp, Warning, TEXT("AI: [%i, %i]"), BestMove.X, BestMove.Y)
 			GameBoard->GetBlockAt(BestMove.X, BestMove.Y)->SetBlockOwner(ETicTacToeBlockOwner::PLAYER_X);
 		}
 	}
